@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>{{song.title}}</title>
+    <link rel="icon" href="/img/icon.svg">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="main-content">
+        {{>header}}
+
+        {{!-- Song info --}}
+
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    {{#if song.album_art}}
+                    <img class="album-art" src="data:image/jpg;base64,{{song.album_art}}">
+                    {{/if}}
+                </div>
+                <div class="col-9">
+                    <p>Artist: {{song.artist}}
+                        {{#if song.album}}<br>Album: {{song.album}}{{/if}}
+                    </p>
+                    <h3>{{song.title}}</h3>
+                    {{#if song.title_romaji}}
+                    <h5>
+                        {{song.title_romaji}}
+                        {{#if song.title_english}} ({{song.title_english}}){{/if}}
+                    </h5>
+                    {{/if}}
+                    {{#if song.description}}<p class="text-muted">{{song.description}}</p>{{/if}}
+                </div>
+            </div>
+        </div>
+
+        {{#if song.link}}
+        <div class="space"></div>
+        {{!-- Embeded YouTube video --}}
+        <div class="text-center">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{song.link}}" frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        </div>
+        {{/if}}
+
+        <div class="space"></div>
+
+        {{!-- Song lyrics --}}
+
+        <div class="card-group">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Japanese Lyrics</h6>
+                    <p class="card-text">
+                        {{{song.lyrics}}}
+                    </p>
+                </div>
+            </div>
+            {{#if song.translation}}
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">English Translation</h6>
+                    <div class="card-text">
+                        <p class="lyrics-en">{{{song.translation}}}</p>
+
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+
+        <div class="space"></div>
+
+        {{!-- Notes --}}
+
+        <div class="card">
+            <div class="card-body">
+                Notes...
+            </div>
+        </div>
+
+        <div class="space"></div>
+
+    </div>
+    {{>footer}}
+</body>
+
+</html>

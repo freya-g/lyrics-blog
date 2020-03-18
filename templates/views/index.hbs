@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Translations</title>
+    <link rel="icon" href="/img/icon.svg">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="main-content">
+        {{>header}}
+
+        <h3>Translations</h3>
+
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th></th>
+                    <th>Song Name</th>
+                    <th>Artist</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {{#each songs}}
+                <tr>
+                    <th>
+                        {{#if album_art}}
+                        <img class="album-art-thumbnail" src="data:image/jpg;base64,{{album_art}}">
+                        {{else}}
+                        <img class="album-art-thumbnail-empty" src="/img/no_img.jpg">
+                        {{/if}}
+                    </th>
+                    <td class="align-middle"><a href="/songs/{{_id}}">{{title}}</a></td>
+                    <td class="align-middle">{{artist}}</td>
+                    <td class="align-middle">
+                        {{#if translation_status}}✓{{else}}WIP{{/if}}
+                    </td>
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+
+        <div class="space"></div>
+    </div>
+
+    {{>footer}}
+
+    <script src="/js/app.js"></script>
+</body>
+
+</html>
