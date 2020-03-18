@@ -1,4 +1,4 @@
-#Lyrics Blog
+# Lyrics Blog
 
 A lyrics website running on Node.js.
 
