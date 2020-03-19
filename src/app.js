@@ -25,16 +25,16 @@ app.use(express.static(publicDirectoryPath))
 
 
 
-app.post('/songs', async (req, res) => {
-    const song = new Song(req.body)
+// app.post('/songs', async (req, res) => {
+//     const song = new Song(req.body)
 
-    try {
-        await song.save()
-        res.status(201).send(song)
-    } catch (e) {
-        res.status(400).send(e)
-    }
-})
+//     try {
+//         await song.save()
+//         res.status(201).send(song)
+//     } catch (e) {
+//         res.status(400).send(e)
+//     }
+// })
 
 // Upload album art
 
@@ -51,15 +51,15 @@ const upload = multer({
 })
 
 
-app.post('/songs/:id/album_art', upload.single('album_art'), async (req, res) => {
-    // TODO: Determine naming system
-    const _id = req.params.id
-    await sharp(req.file.buffer).resize(300, 300, { withoutEnlargement: true }).png().toFile('public/img/' + req.file.originalname)
-    await Song.findByIdAndUpdate(_id, { album_art: req.file.originalname })
-    res.send()
-}, (error, req, res, next) => {
-    res.status(400).send({ error: error.message })
-})
+// app.post('/songs/:id/album_art', upload.single('album_art'), async (req, res) => {
+//     // TODO: Determine naming system
+//     const _id = req.params.id
+//     await sharp(req.file.buffer).resize(300, 300, { withoutEnlargement: true }).png().toFile('public/img/' + req.file.originalname)
+//     await Song.findByIdAndUpdate(_id, { album_art: req.file.originalname })
+//     res.send()
+// }, (error, req, res, next) => {
+//     res.status(400).send({ error: error.message })
+// })
 
 // Get all songs
 app.get('', async (req, res) => {

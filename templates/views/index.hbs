@@ -35,7 +35,11 @@
                         <img class="album-art-thumbnail-empty" src="/img/no_img.jpg">
                         {{/if}}
                     </th>
-                    <td class="align-middle"><a href="/songs/{{_id}}">{{title}}</a></td>
+                    <td class="align-middle"><a href="/songs/{{_id}}">
+                        {{title}}
+                        {{#if title_romaji}}<br> {{title_romaji}}{{/if}}
+                        {{#if title_romaji}} ({{title_english}}){{/if}}
+                    </a></td>
                     <td class="align-middle">{{artist}}</td>
                     <td class="align-middle">
                         {{#if translation_status}}✓{{else}}WIP{{/if}}
