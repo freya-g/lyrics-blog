@@ -37,6 +37,7 @@ app.post('/songs', async (req, res) => {
 })
 
 // Upload album art
+
 const upload = multer({
     limits: {
         fileSize: 2000000   // 2MB
@@ -49,10 +50,12 @@ const upload = multer({
     }
 })
 
+
 app.post('/songs/:id/album_art', upload.single('album_art'), async (req, res) => {
+    // TODO: Determine naming system
     const _id = req.params.id
-    const buffer = await sharp(req.file.buffer).resize(500, 500, { withoutEnlargement: true }).png().toBuffer()
-    await Song.findByIdAndUpdate(_id, { album_art: buffer })
+    await sharp(req.file.buffer).resize(300, 300, { withoutEnlargement: true }).png().toFile('public/img/' + req.file.originalname)
+    await Song.findByIdAndUpdate(_id, { album_art: req.file.originalname })
     res.send()
 }, (error, req, res, next) => {
     res.status(400).send({ error: error.message })
@@ -63,22 +66,12 @@ app.get('', async (req, res) => {
     // TODO: pagination
 
     const songs = await Song.find()
-    // Convert album art to base64
-    songs.forEach((song) => {
-        if (song.album_art) {
-            song.album_art = Buffer.from(song.album_art).toString('base64')
-        }
-    })
-
     res.render('index', { songs })
 })
 
 
 app.get('/about', (req, res) => {
-    res.render('about', {
-        title: 'About Me',
-        name: 'Freya'
-    })
+    res.render('about')
 })
 
 // Render page for one song
@@ -87,9 +80,6 @@ app.get('/songs/:id', async (req, res) => {
     try {
         const _id = req.params.id
         var song = await Song.findById(_id)
-        if (song.album_art) {
-            song.album_art = Buffer.from(song.album_art).toString('base64')
-        }
         res.render('song', { song })
 
     } catch (e) {

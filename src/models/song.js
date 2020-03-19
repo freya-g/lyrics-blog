@@ -22,7 +22,7 @@ const songSchema = new mongoose.Schema({
         type: String
     },
     album_art: {
-        type: Buffer
+        type: String
     },
     link: {
         type: String
